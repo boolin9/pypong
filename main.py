@@ -12,7 +12,6 @@ screen.bgcolor('black')
 screen.title("PyPong")
 screen.tracer(0)
 
-
 # Objects
 r_paddle = Paddle((360, 0))
 l_paddle = Paddle((-360, 0))
@@ -32,9 +31,10 @@ game_on = True
 
 # Run game
 while game_on:
-    time.sleep(0.06)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move()
+    scoreboard.draw_line()
     
     # Collision parameters
     if ball.distance(r_paddle) < 50 and ball.xcor() > 330 or ball.distance(l_paddle) < 50 and ball.xcor() < -330:
@@ -45,9 +45,13 @@ while game_on:
         
     if ball.xcor() > 400:
         ball.reset_position()
+        scoreboard.l_point()
+        scoreboard.update_scoreboard()
         
     if ball.xcor() < -400:
         ball.reset_position()
+        scoreboard.r_point()
+        scoreboard.update_scoreboard()
 
 
 screen.exitonclick()
